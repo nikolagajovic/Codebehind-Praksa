@@ -18,3 +18,19 @@ function simulateGame(team1, team2) {
     };
 
 }
+
+// Funkcija za Ažuriranje Statistika Tima
+function updateTeamStatus(team, scoredPoints, concededPoints, win) {
+    team.gamesPlayed = (team.gamesPlayed || 0) + 1;
+    team.pointsScored = (team.pointsScored || 0) + scoredPoints;
+    team.pointsConceded = (team.pointsConceded || 0) + concededPoints;
+    team.pointDifference = team.pointsScored - team.pointsConceded;
+    if (win) {
+        team.win = (team.wins || 0) + 1;
+        team.points = (team.points || 0) + 2;
+    } else {
+        team.losses = (team.losses || 0) + 1;
+        team.points = (team.points || 0) + 1;
+    }
+
+}
