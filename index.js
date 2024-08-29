@@ -95,4 +95,17 @@ function displayGroupStandings(groupStandings){
         
 }
 
-
+//Kreiranje šešira
+function createPots(groupStandings){
+    const pots = {D: [], E: [], F:[], G:[]}
+    const allTeams = [];
+    for(const group of Object.keys(groupStandings)) {
+        allTeams.push(...groupStandings[group]);
+    }
+    const sortedTeams = allTeams.sort((a, b) => b.points - a.points || b.pointDifference - a.pointDifference || b.pointsScored - a.pointsScored);
+    pots.D.push(sortedTeams[0], sortedTeams[1]);
+    pots.E.push(sortedTeams[2], sortedTeams[3]);
+    pots.F.push(sortedTeams[4], sortedTeams[5]);
+    pots.G.push(sortedTeams[6], sortedTeams[7]);
+    return pots;
+}
