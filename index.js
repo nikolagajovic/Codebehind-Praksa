@@ -34,3 +34,43 @@ function updateTeamStatus(team, scoredPoints, concededPoints, win) {
     }
 
 }
+
+// Funkcija za Simulaciju Grupe
+function simulateGroupStage(groups) {
+    const groupResults = {};
+    const groupStanding = {};
+
+
+    for (const group of Object.keys(groups)) {
+        groupResults[group] = [];
+        groupStanding[group] = groups[group].map(team => ({ ...team, points: 0, gamesPlayed: 0, wins: 0, losses: 0, points: 0 }));
+        
+
+        for(let i = 0; i < groupStanding[group].Length; i++) {  
+            for(let j = i + 1; j < groupStanding[group].Length; j++) {
+                const result = simulateGame(groupStanding[group][i], groupStandings[group][j]);
+                groupResults[group].push({
+                    game: `${groupStandings[group][i].Team} vs ${groupStandings[group][j].Team}`,
+                    result: result.score,
+                    winner: result.winner.Team,
+                    loser: result.loser.Team
+                });
+                const team1Score = parseInt(result.score.split(":")[0]);
+                const team2Score = parseInt(result.score.split(":")[0]);
+                updateTeamStatus(groupStanding[group][i], team1Score, team2Score, result.winner === groupStandings[group][i]);
+                updateTeamStatus(groupStanding[group][j], team1Score, team2Score, result.winner === groupStandings[group][j]);
+
+            }
+
+        }
+        groupStanding[group].sort((a, b) => {
+            if (b.points !== a.points) return b.points - a.points;
+            if (b.pointDifference !== a.pointDifference) return b.pointDifference - a.pointDifference;
+            return b.pointsScored - a.pointsScored;
+        });
+    }
+
+    return {groupResults, groupStanding};
+    
+}
+
