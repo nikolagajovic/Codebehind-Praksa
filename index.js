@@ -74,3 +74,25 @@ function simulateGroupStage(groups) {
     
 }
 
+//Prikazivanje rezultata
+function displayResults(groupStageResults) {
+    for (const group of Object.keys(groupStageResults)) {
+        console.log(`Grupa ${group}:`);
+        for (const game of groupStageResults[group]) {
+            console.log(`    ${game.game} (${game.result})`);
+        }
+    }
+}
+
+//Prikazivanje tabele
+function displayGroupStandings(groupStandings){
+    for (const group of Object.keys(groupStandings)) {
+        console.log(`Grupa ${group}:`);
+        groupStandings[group].forEach((team, index) => {
+            console.log(`    ${index + 1}. ${team.Team} (${team.wins} / ${team.losses} / ${team.points} bodova / ${team.pointsScored} postignutih koševa / ${team.pointsConceded} primljenih koševa / ${team.pointDifference} koš razlika)`);
+        });
+    }
+        
+}
+
+
