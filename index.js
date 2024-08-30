@@ -38,17 +38,17 @@ function updateTeamStatus(team, scoredPoints, concededPoints, win) {
 // Funkcija za Simulaciju Grupe
 function simulateGroupStage(groups) {
     const groupResults = {};
-    const groupStanding = {};
+    const groupStandings = {};
 
 
     for (const group of Object.keys(groups)) {
         groupResults[group] = [];
-        groupStanding[group] = groups[group].map(team => ({ ...team, points: 0, gamesPlayed: 0, wins: 0, losses: 0, points: 0 }));
+        groupStandings[group] = groups[group].map(team => ({ ...team, points: 0, gamesPlayed: 0, wins: 0, losses: 0, points: 0 }));
         
 
-        for(let i = 0; i < groupStanding[group].Length; i++) {  
-            for(let j = i + 1; j < groupStanding[group].Length; j++) {
-                const result = simulateGame(groupStanding[group][i], groupStandings[group][j]);
+        for(let i = 0; i < groupStandings[group].length; i++) {  
+            for(let j = i + 1; j < groupStandings[group].length; j++) {
+                const result = simulateGame(groupStandings[group][i], groupStandings[group][j]);
                 groupResults[group].push({
                     game: `${groupStandings[group][i].Team} vs ${groupStandings[group][j].Team}`,
                     result: result.score,
@@ -57,20 +57,20 @@ function simulateGroupStage(groups) {
                 });
                 const team1Score = parseInt(result.score.split(":")[0]);
                 const team2Score = parseInt(result.score.split(":")[0]);
-                updateTeamStatus(groupStanding[group][i], team1Score, team2Score, result.winner === groupStandings[group][i]);
-                updateTeamStatus(groupStanding[group][j], team1Score, team2Score, result.winner === groupStandings[group][j]);
+                updateTeamStatus(groupStandings[group][i], team1Score, team2Score, result.winner === groupStandings[group][i]);
+                updateTeamStatus(groupStandings[group][j], team1Score, team2Score, result.winner === groupStandings[group][j]);
 
             }
 
         }
-        groupStanding[group].sort((a, b) => {
+        groupStandings[group].sort((a, b) => {
             if (b.points !== a.points) return b.points - a.points;
             if (b.pointDifference !== a.pointDifference) return b.pointDifference - a.pointDifference;
             return b.pointsScored - a.pointsScored;
         });
     }
 
-    return {groupResults, groupStanding};
+    return {groupResults, groupStandings};
     
 }
 
@@ -89,7 +89,8 @@ function displayGroupStandings(groupStandings){
     for (const group of Object.keys(groupStandings)) {
         console.log(`Grupa ${group}:`);
         groupStandings[group].forEach((team, index) => {
-            console.log(`    ${index + 1}. ${team.Team} (${team.wins} / ${team.losses} / ${team.points} bodova / ${team.pointsScored} postignutih koševa / ${team.pointsConceded} primljenih koševa / ${team.pointDifference} koš razlika)`);
+            console.log(`    ${index + 1}. ${team.Team} (${team.wins} / ${team.losses} / ${team.points} bodova / 
+                ${team.pointsScored} postignutih koševa / ${team.pointsConceded} primljenih koševa / ${team.pointDifference} koš razlika)`);
         });
     }
         
@@ -112,14 +113,14 @@ function createPots(groupStandings){
 
 //Žreb Četvrtfinala
 function drawQuarterFinals(pots, groupResults){
-    const quarterFinals = {};
+    const quarterFinals = [];
     const usedTeams = new Set();
 
 
     function getRandomTeamFromPot(pot){
         const availableTeams = pot.filter(team => !usedTeams.has(team.team));
-        if (availableTeams.Length === 0) return null;
-        const randomIndex = Math.floor(Math.random() * availableTeams.Length);
+        if (availableTeams.length === 0) return null;
+        const randomIndex = Math.floor(Math.random() * availableTeams.length);
         return availableTeams[randomIndex];  
     }
 
@@ -132,7 +133,7 @@ function drawQuarterFinals(pots, groupResults){
     }
 
 
-    while (quarterFinals.Length < 4) {
+    while (quarterFinals.length < 4) {
         const team1D = getRandomTeamFromPot(pots.D);
         const team2G = getRandomTeamFromPot(pots.G);
         const team1E = getRandomTeamFromPot(pots.E);
@@ -188,9 +189,9 @@ function arrangeFinalAndThirdPlace(semiFinalsResults) {
 function displayPots(pots) {
     console.log("Šeširi:");
     for(const pot in pots) {
-        console.log(`    Šešir ${pot}`);
+        console.log(`   Šešir ${pot}`);
         pots[pot].forEach(team => {
-            console.log(`${team.Team}`);
+            console.log(`      ${team.Team}`);
         });
     }
 }
@@ -204,11 +205,11 @@ function displayKnockoutDraw(quarterFinals) {
 }
 
 //Prilaz Medalja
-function displayMedalWinners(FinalResults, thirdPlaceResults) {
+function displayMedalWinners(finalResults, thirdPlaceResults) {
     console.log("Medalje:");
-    console.log(`1. mesto: ${finalResult.winner.Team}`);
-    console.log(`2. mesto: ${finalResult.loser.Team}`);
-    console.log(`3. mesto: ${thirdPlaceResult.winner.Team}`);
+    console.log(`   1. mesto: ${finalResult.winner.Team}`);
+    console.log(`   2. mesto: ${finalResult.loser.Team}`);
+    console.log(`   3. mesto: ${thirdPlaceResult.winner.Team}`);
 
 }
 
@@ -229,7 +230,7 @@ displayKnockoutDraw(quarterFinals);
 const quarterFinalsResults = simulateKnockoutStage(quarterFinals);
 console.log("Četvrtfinale:");
 quarterFinalsResults.forEach(result => {
-    console.log(`${result.game} (${result.score})`);
+    console.log(`   ${result.game} (${result.score})`);
 });
 
 
@@ -238,19 +239,19 @@ const semiFinals = arrangeSemiFinals(quarterFinalsResults);
 const semiFinalsResults = simulateKnockoutStage(semiFinals);
 console.log("Polufinale:");
 semiFinalsResults.forEach(result => {
-    console.log(`${result.game} (${result.score})`);
+    console.log(`   ${result.game} (${result.score})`);
 }); 
 
 
 
 //Simulacija finala i utakmice za trece mesto
 const {thirdPlaceGame, finalGame} = arrangeFinalAndThirdPlace(semiFinalsResults);
-const thirdPlaceResult = simulateKnockoutStage({thirdPlaceGame})[0];
+const thirdPlaceResult = simulateKnockoutStage([thirdPlaceGame])[0];
 const finalResult = simulateKnockoutStage([finalGame])[0];
 console.log("Utakmica za treće mesto:");
-console.log(`${thirdPlaceResult.game} (${thirdPlaceResult.score})`);
+console.log(`   ${thirdPlaceResult.game} (${thirdPlaceResult.score})`);
 console.log("Finale:");
-console.log(`${finalResult.game} (${finalResult.score})`);
+console.log(`   ${finalResult.game} (${finalResult.score})`);
 
 
 
