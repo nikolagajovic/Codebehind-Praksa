@@ -252,3 +252,7 @@ console.log(`${thirdPlaceResult.game} (${thirdPlaceResult.score})`);
 console.log("Finale:");
 console.log(`${finalResult.game} (${finalResult.score})`);
 
+
+
+//Prikazivanje osvajača medalja
+displayMedalWinners(finalResult, thirdPlaceResult);
