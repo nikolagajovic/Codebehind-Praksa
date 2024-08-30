@@ -218,8 +218,16 @@ displayResults(groupResults);
 displayGroupStandings(groupStandings);
 
 
-//Simulacija četvrtfinala
+//Organizacija i žreb četvrtfinala
 const pots = createPots(groupStandings);
 displayPots(pots);
 const quarterFinals = drawQuarterFinals(pots, groupResults);
-displayKnockoutDraw(quarterFinals)
+displayKnockoutDraw(quarterFinals);
+
+
+//Simulacija Četvrtfinala
+const quarterFinalsResults = simulateKnockoutStage(quarterFinals);
+console.log("Četvrtfinale:");
+quarterFinalsResults.forEach(result => {
+    console.log(`${result.game} (${result.score})`);
+});
