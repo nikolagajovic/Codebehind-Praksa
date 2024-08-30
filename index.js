@@ -241,3 +241,14 @@ semiFinalsResults.forEach(result => {
     console.log(`${result.game} (${result.score})`);
 }); 
 
+
+
+//Simulacija finala i utakmice za trece mesto
+const {thirdPlaceGame, finalGame} = arrangeFinalAndThirdPlace(semiFinalsResults);
+const thirdPlaceResult = simulateKnockoutStage({thirdPlaceGame})[0];
+const finalResult = simulateKnockoutStage([finalGame])[0];
+console.log("Utakmica za treće mesto:");
+console.log(`${thirdPlaceResult.game} (${thirdPlaceResult.score})`);
+console.log("Finale:");
+console.log(`${finalResult.game} (${finalResult.score})`);
+
