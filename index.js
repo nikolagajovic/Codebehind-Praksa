@@ -110,7 +110,7 @@ function createPots(groupStandings){
     return pots;
 }
 
-//Žreb četvrtfinala
+//Žreb Četvrtfinala
 function drawQuarterFinals(pots, groupResults){
     const quarterFinals = {};
     const usedTeams = new Set();
@@ -152,4 +152,19 @@ function drawQuarterFinals(pots, groupResults){
     }
     return quarterFinals;
     
-}   
+}
+
+//Simulacija Eliminacione Faze
+function simulateKnockoutStage(game) {
+    const results = [];
+    game.forEach(game => {
+        const result = simulateGame(game.team1, game.team2);
+        results.push({
+            game: `${result.winner.Team} - ${result.loser.Team}`,
+            score: result.score,
+            winner: result.winner,
+            loser: result.loser
+        });
+    });
+    return results;
+}
