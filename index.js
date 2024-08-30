@@ -190,7 +190,7 @@ function displayPots(pots) {
     for(const pot in pots) {
         console.log(`    Šešir ${pot}`);
         pots[pot].forEach(team => {
-            console.log(`        ${team.Team}`);
+            console.log(`${team.Team}`);
         });
     }
 }
@@ -201,4 +201,13 @@ function displayKnockoutDraw(quarterFinals) {
     quarterFinals.forEach ((game, index) => {
         console.log(`    ${game.team1.Team} - ${game.team2.Team}`);
     });
+}
+
+//Prilaz Medalja
+function displayMedalWinners(FinalResults, thirdPlaceResults) {
+    console.log("Medalje:");
+    console.log(`1. mesto: ${finalResult.winner.Team}`);
+    console.log(`2. mesto: ${finalResult.loser.Team}`);
+    console.log(`3. mesto: ${thirdPlaceResult.winner.Team}`);
+
 }
