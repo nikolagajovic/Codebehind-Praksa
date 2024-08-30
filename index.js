@@ -109,3 +109,47 @@ function createPots(groupStandings){
     pots.G.push(sortedTeams[6], sortedTeams[7]);
     return pots;
 }
+
+//Žreb četvrtfinala
+function drawQuarterFinals(pots, groupResults){
+    const quarterFinals = {};
+    const usedTeams = new Set();
+
+
+    function getRandomTeamFromPot(pot){
+        const availableTeams = pot.filter(team => !usedTeams.has(team.team));
+        if (availableTeams.Length === 0) return null;
+        const randomIndex = Math.floor(Math.random() * availableTeams.Length);
+        return availableTeams[randomIndex];  
+    }
+
+
+    function isValidMatch(team1, team2){
+        return !Object.values(groupResults).flat().some(game =>
+            (game.winner === team1.Team && game.loser === team2.Team) || 
+            (game.winner === team2.Team && game.loser === team1.Team)
+        );
+    }
+
+
+    while (quarterFinals.Length < 4) {
+        const team1D = getRandomTeamFromPot(pots.D);
+        const team2G = getRandomTeamFromPot(pots.G);
+        const team1E = getRandomTeamFromPot(pots.E);
+        const team2F = getRandomTeamFromPot(pots.F);
+
+        if (team1D && team2G && isValidMatch(team1D, team2G)) {
+            usedTeams.add(team1D.Team);
+            usedTeams.add(team2G.Team);
+            quarterFinals.push({team1: team1D, team2: team2G});
+        }
+
+        if (team1E && team2F && isValidMatch(team1E, team2F)) {
+            usedTeams.add(team1E.Team);
+            usedTeams.add(team2F.Team);
+            quarterFinals.push({team1: team1E, team2: team2F});
+        }
+    }
+    return quarterFinals;
+    
+}   
