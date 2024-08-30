@@ -212,4 +212,7 @@ function displayMedalWinners(FinalResults, thirdPlaceResults) {
 
 }
 
-
+//Simulacija grupne faze
+const {groupResults, groupStandings} = simulateGroupStage(groupsData);
+displayResults(groupResults);
+displayGroupStandings(groupStandings);
