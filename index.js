@@ -231,3 +231,13 @@ console.log("Četvrtfinale:");
 quarterFinalsResults.forEach(result => {
     console.log(`${result.game} (${result.score})`);
 });
+
+
+//Simulacija Polufinala
+const semiFinals = arrangeSemiFinals(quarterFinalsResults);
+const semiFinalsResults = simulateKnockoutStage(semiFinals);
+console.log("Polufinale:");
+semiFinalsResults.forEach(result => {
+    console.log(`${result.game} (${result.score})`);
+}); 
+
