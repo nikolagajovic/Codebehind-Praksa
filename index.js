@@ -216,3 +216,10 @@ function displayMedalWinners(FinalResults, thirdPlaceResults) {
 const {groupResults, groupStandings} = simulateGroupStage(groupsData);
 displayResults(groupResults);
 displayGroupStandings(groupStandings);
+
+
+//Simulacija četvrtfinala
+const pots = createPots(groupStandings);
+displayPots(pots);
+const quarterFinals = drawQuarterFinals(pots, groupResults);
+displayKnockoutDraw(quarterFinals)
