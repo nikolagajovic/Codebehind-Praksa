@@ -194,3 +194,11 @@ function displayPots(pots) {
         });
     }
 }
+
+// Prikaz Žreba Četvrtfinala
+function displayKnockoutDraw(quarterFinals) {
+    console.log("Eliminaciona faza:");
+    quarterFinals.forEach ((game, index) => {
+        console.log(`    ${game.team1.Team} - ${game.team2.Team}`);
+    });
+}
