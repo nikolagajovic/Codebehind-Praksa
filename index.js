@@ -176,3 +176,10 @@ function arrangeSemiFinals(quarterFinalsResults) {
     semiFinals.push ({ team1: quarterFinalsResults[2].winner, team2: quarterFinalsResults[3].winner});
     return semiFinals;
 }
+
+//Finale i Utakmice za Treće Mesto
+function arrangeFinalAndThirdPlace(semiFinalsResults) {
+    const thirdPlaceGame = { team1: semiFinalsResults[0].loser, team2: semiFinalsResults[1].loser};
+    const finalGame = { team1: semiFinalsResults[0].winner, team2: semiFinalsResults[1].winner};
+    return { thirdPlaceGame, finalGame};
+}
