@@ -211,3 +211,5 @@ function displayMedalWinners(FinalResults, thirdPlaceResults) {
     console.log(`3. mesto: ${thirdPlaceResult.winner.Team}`);
 
 }
+
+
