@@ -183,3 +183,14 @@ function arrangeFinalAndThirdPlace(semiFinalsResults) {
     const finalGame = { team1: semiFinalsResults[0].winner, team2: semiFinalsResults[1].winner};
     return { thirdPlaceGame, finalGame};
 }
+
+//Prikaz Šešira
+function displayPots(pots) {
+    console.log("Šeširi:");
+    for(const pot in pots) {
+        console.log(`    Šešir ${pot}`);
+        pots[pot].forEach(team => {
+            console.log(`        ${team.Team}`);
+        });
+    }
+}
