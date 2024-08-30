@@ -168,3 +168,11 @@ function simulateKnockoutStage(game) {
     });
     return results;
 }
+
+//Simulacija Polufinala
+function arrangeSemiFinals(quarterFinalsResults) {
+    const semiFinals = [];
+    semiFinals.push ({ team1: quarterFinalsResults[0].winner, team2: quarterFinalsResults[1].winner});
+    semiFinals.push ({ team1: quarterFinalsResults[2].winner, team2: quarterFinalsResults[3].winner});
+    return semiFinals;
+}
