@@ -4,13 +4,23 @@ const fs = require ('fs');
 const groupsData = JSON.parse(fs.readFileSync('groups.json', 'utf8'));
 
 // Funkcija za simulaciju utakmice
-function simulateGame(team1, team2) {
+function simulateGame(team1, team2, allowDraw = false) {
     const rankDifference = team2.FIBARanking - team1.FIBARanking;
     const probabilityTeam1Win = 1 / (1 + Math.pow(10, rankDifference / 400));
     const randomValue = Math.random();
     const team1Wins = randomValue < probabilityTeam1Win;
     const team1Score = Math.floor(Math.random() * 20) + 80;
     const team2Score = Math.floor(Math.random() * 20) + 80;
+
+    if (!allowDraw && team1Score === team2Score) {
+        if (team1Wins) {
+            team1Score += 1;
+        } else {
+            team2Score += 1;
+        }
+    }
+
+    
     return {
         winner: team1Wins ? team1 : team2,
         loser: team1Wins ? team2 : team1,
