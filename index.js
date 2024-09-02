@@ -13,7 +13,7 @@ function simulateGame(team1, team2) {
     const team2Score = Math.floor(Math.random() * 20) + 80;
     return {
         winner: team1Wins ? team1 : team2,
-        loser: team1Wins ? team1 : team2,
+        loser: team1Wins ? team2 : team1,
         score: team1Wins ? `${team1Score}:${team2Score}` : `${team2Score}:${team1Score}`
     };
 
@@ -26,7 +26,7 @@ function updateTeamStatus(team, scoredPoints, concededPoints, win) {
     team.pointsConceded = (team.pointsConceded || 0) + concededPoints;
     team.pointDifference = team.pointsScored - team.pointsConceded;
     if (win) {
-        team.win = (team.wins || 0) + 1;
+        team.wins = (team.wins || 0) + 1;
         team.points = (team.points || 0) + 2;
     } else {
         team.losses = (team.losses || 0) + 1;
@@ -56,7 +56,7 @@ function simulateGroupStage(groups) {
                     loser: result.loser.Team
                 });
                 const team1Score = parseInt(result.score.split(":")[0]);
-                const team2Score = parseInt(result.score.split(":")[0]);
+                const team2Score = parseInt(result.score.split(":")[1]);
                 updateTeamStatus(groupStandings[group][i], team1Score, team2Score, result.winner === groupStandings[group][i]);
                 updateTeamStatus(groupStandings[group][j], team1Score, team2Score, result.winner === groupStandings[group][j]);
 
@@ -207,9 +207,9 @@ function displayKnockoutDraw(quarterFinals) {
 //Prilaz Medalja
 function displayMedalWinners(finalResults, thirdPlaceResults) {
     console.log("Medalje:");
-    console.log(`   1. mesto: ${finalResult.winner.Team}`);
-    console.log(`   2. mesto: ${finalResult.loser.Team}`);
-    console.log(`   3. mesto: ${thirdPlaceResult.winner.Team}`);
+    console.log(`   1. mesto: ${finalResults.winner.Team}`);
+    console.log(`   2. mesto: ${finalResults.loser.Team}`);
+    console.log(`   3. mesto: ${thirdPlaceResults.winner.Team}`);
 
 }
 
