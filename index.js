@@ -112,18 +112,17 @@ function createPots(groupStandings){
 }
 
 //Žreb Četvrtfinala
+
 function drawQuarterFinals(pots, groupResults){
     const quarterFinals = [];
     const usedTeams = new Set();
 
-
     function getRandomTeamFromPot(pot){
-        const availableTeams = pot.filter(team => !usedTeams.has(team.team));
+        const availableTeams = pot.filter(team => !usedTeams.has(team.Team));
         if (availableTeams.length === 0) return null;
         const randomIndex = Math.floor(Math.random() * availableTeams.length);
         return availableTeams[randomIndex];  
     }
-
 
     function isValidMatch(team1, team2){
         return !Object.values(groupResults).flat().some(game =>
@@ -131,7 +130,6 @@ function drawQuarterFinals(pots, groupResults){
             (game.winner === team2.Team && game.loser === team1.Team)
         );
     }
-
 
     while (quarterFinals.length < 4) {
         const team1D = getRandomTeamFromPot(pots.D);
@@ -152,8 +150,8 @@ function drawQuarterFinals(pots, groupResults){
         }
     }
     return quarterFinals;
-    
-}
+}   
+
 
 //Simulacija Eliminacione Faze
 function simulateKnockoutStage(game) {
